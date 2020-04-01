@@ -12,7 +12,7 @@ pipeline {
     stage('Build & Install') {
       steps {
         echo "Performing maven build"
-        sh 'mvn clean package'
+        sh 'mvn clean install'
       }
     }
     stage('Nexus Lifecycle Evaluation') {
