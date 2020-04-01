@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label 'maven-node'
+    label 'maven-node-java-11'
   }
   stages {
     stage('Pull Source') {
