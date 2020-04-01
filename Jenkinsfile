@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'Webgoat', iqStage: 'build', jobCredentialsId: ''
+        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'WebGoat', iqStage: 'build', jobCredentialsId: ''
       }
     }
   }
