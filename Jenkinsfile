@@ -12,7 +12,8 @@ pipeline {
     stage('Build & Install') {
       steps {
         echo "Performing build"
-        sh 'export ANDROID_HOME=/home/jenkins/ && bash ./gradlew clean build'
+	//Need to accept license in here, seems new hostname within the docker nodes makes Google want to make you agree again
+	sh 'yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses && export ANDROID_SDK_ROOT=/home/jenkins/ && bash ./gradlew clean build'
       }
     }
     stage('Nexus Lifecycle Evaluation') {
