@@ -1,0 +1,70 @@
+# ASP.NET Core (.NET Framework)
+
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+
+steps:
+
+# initial scan of the source code prior to a build to pick up individual files from packages that could be forked in manually
+- task: NexusIqPipelineTask@1
+  displayName: 'Nexus IQ Eval - Source Files'
+  inputs:
+    nexusIqService: 'iq'
+    applicationId: 'artie-dotnetcore-react'
+    stage: 'build'
+    scanTargets: '**/*'
+
+- task: NuGetToolInstaller@1
+
+# equivalnet to the dotnet restore command, generates all the nupkgs pulled down by the solution into a dir
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+    restoreDirectory: 'packages'    
+
+# scan the dir with the .nupkg files with IQ to get package level results
+# also includes javascript file endings for the front-end components in this project
+# TODO: figure out why MJA rollup isn't happening.  ingesting the package.jsons doesn't seem to do it
+- task: NexusIqPipelineTask@1
+  displayName: 'Nexus IQ Eval - Nuget'
+  inputs:
+    nexusIqService: 'iq'
+    applicationId: 'artie-dotnetcore-react'
+    stage: 'stage-release'
+    scanTargets: '**/*.js, **/*.json, packages/**/*.nupkg'
+
+# the build command that generates the release binaries and extracts the executable dlls the project needs to deploy from the nupkgs
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+# Final scan to pick up the relevant file endings in the Release directory which has the deployment binaries
+- task: NexusIqPipelineTask@1
+  displayName: 'Nexus IQ Eval - Release'
+  inputs:
+    nexusIqService: 'iq'
+    applicationId: 'dotnetcore-react'
+    stage: 'release'
+    scanTargets: '**/Release/**/*.js, **/Release/**/*.json, **/Release/**/*.dll'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'dotnetcore-react'
+    publishLocation: 'Container'
