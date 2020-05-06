@@ -6,7 +6,7 @@ pipeline {
     stage('Pull Source') {
       // Get some code from a GitHub repository
       steps {
-        git url: 'https://github.com/bkimminich/juice-shop.git'
+        git url: 'https://github.com/OWASP/NodeGoat.git'
       }
     }
     stage('Build & Install') {
