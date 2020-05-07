@@ -1,24 +1,24 @@
 pipeline {
   agent {
-    label 'gradle-node'
+    label 'compose-node'
   }
   stages {
     stage('Pull Source') {
       // Get some code from a GitHub repository
       steps {
-        git branch: 'dev', url: 'https://github.com/HoraApps/LeafPic'
+        git url: 'https://github.com/symfony/symfony.git'
       }
     }
     stage('Build & Install') {
       steps {
         echo "Performing build"
-	//Need to accept license in here, seems new hostname within the docker nodes makes Google want to make you agree again
-	sh 'yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses && export ANDROID_SDK_ROOT=/home/jenkins/ && bash ./gradlew clean build'
+        sh 'composer -V'
+        sh 'composer install'
       }
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'LeafPic', iqStage: 'build', jobCredentialsId: '', iqScanPatterns: [[scanPattern: '**/*.*']]
+        sh 'java -jar /usr/bin/nexus-iq-cli.jar -a admin:admin123 -i php-symfony -s env.IQ-server . --stage Build'
       }
     }
   }

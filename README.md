@@ -1,4 +1,4 @@
 # nexus-ci-examples
-CI example build for LeafPic Android app demonstrating a Andriod SDK gradle build
+CI example build for Symfony demonstrating a PHP Compose build
 
-Jenkins docker build node inspired by the work of Circle CI: https://github.com/circleci/circleci-images/blob/staging/android/Dockerfile.m4
+Uses IQ CLI so requires Jenkins Global Environmental Variable to tell it where to reach the IQ server, note this must be reachable from a Docker build node, if you run Jenkins in Docker you may need to add the node to a Docker network.
