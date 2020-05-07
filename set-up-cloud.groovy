@@ -32,6 +32,16 @@ def DockerTemplateParametersMaven = [
   remoteFs:       ''
 ]
 
+def dockerTemplateBaseParametersMaven11 = [
+  image:              'adamjwsuch/jenkins-node-maven:latest-java-11'
+]
+
+def DockerTemplateParametersMaven11 = [
+  instanceCapStr: '4',
+  labelString:    'maven-node-java-11',
+  remoteFs:       ''
+]
+
 def dockerTemplateBaseParametersGradle = [
   image:              'adamjwsuch/jenkins-node-gradle:latest'
 ]
@@ -82,6 +92,18 @@ DockerTemplate dockerTemplateMaven = new DockerTemplate(
   DockerTemplateParametersMaven.labelString,
   DockerTemplateParametersMaven.remoteFs,
   DockerTemplateParametersMaven.instanceCapStr
+)
+
+DockerTemplateBase dockerTemplateBaseMaven11 = new DockerTemplateBase(
+  dockerTemplateBaseParametersMaven11.image
+)
+
+DockerTemplate dockerTemplateMaven11 = new DockerTemplate(
+  dockerTemplateBaseMaven11,
+  new DockerComputerAttachConnector(),
+  DockerTemplateParametersMaven11.labelString,
+  DockerTemplateParametersMaven11.remoteFs,
+  DockerTemplateParametersMaven11.instanceCapStr
 )
 
 DockerTemplateBase dockerTemplateBaseGradle = new DockerTemplateBase(
@@ -136,6 +158,7 @@ DockerCloud dockerCloud = new DockerCloud(
   dockerCloudParameters.name,
   [
     dockerTemplateMaven,
+    dockerTemplateMaven11,
     dockerTemplateGradle,
     dockerTemplateNPM,
     dockerTemplateCompose,
@@ -158,6 +181,9 @@ jenkins.clouds.add(dockerCloud)
 dockerTemplateMaven.setMode(Node.Mode.EXCLUSIVE)
 dockerTemplateMaven.setRemoteFs("/home/jenkins")
 dockerTemplateMaven.connector.setUser("jenkins")
+dockerTemplateMaven11.setMode(Node.Mode.EXCLUSIVE)
+dockerTemplateMaven11.setRemoteFs("/home/jenkins")
+dockerTemplateMaven11.connector.setUser("jenkins")
 dockerTemplateGradle.setMode(Node.Mode.EXCLUSIVE)
 dockerTemplateGradle.setRemoteFs("/home/jenkins")
 dockerTemplateGradle.connector.setUser("jenkins")
