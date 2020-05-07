@@ -62,6 +62,16 @@ def DockerTemplateParametersCompose = [
   remoteFs:       ''
 ]
 
+def dockerTemplateBaseParametersPip = [
+  image:              'adamjwsuch/jenkins-node-pip:latest'
+]
+
+def DockerTemplateParametersPip = [
+  instanceCapStr: '4',
+  labelString:    'pip-node',
+  remoteFs:       ''
+]
+
 DockerTemplateBase dockerTemplateBaseMaven = new DockerTemplateBase(
   dockerTemplateBaseParametersMaven.image
 )
@@ -110,13 +120,26 @@ DockerTemplate dockerTemplateCompose = new DockerTemplate(
   DockerTemplateParametersCompose.instanceCapStr
 )
 
+DockerTemplateBase dockerTemplateBasePip = new DockerTemplateBase(
+  dockerTemplateBaseParametersPip.image
+)
+
+DockerTemplate dockerTemplatePip = new DockerTemplate(
+  dockerTemplateBasePip,
+  new DockerComputerAttachConnector(),
+  DockerTemplateParametersPip.labelString,
+  DockerTemplateParametersPip.remoteFs,
+  DockerTemplateParametersPip.instanceCapStr
+)
+
 DockerCloud dockerCloud = new DockerCloud(
   dockerCloudParameters.name,
   [
     dockerTemplateMaven,
     dockerTemplateGradle,
     dockerTemplateNPM,
-    dockerTemplateCompose 
+    dockerTemplateCompose,
+    dockerTemplatePip 
   ],
   dockerCloudParameters.serverUrl,
   dockerCloudParameters.containerCapStr,
@@ -144,6 +167,9 @@ dockerTemplateNPM.connector.setUser("jenkins")
 dockerTemplateCompose.setMode(Node.Mode.EXCLUSIVE)
 dockerTemplateCompose.setRemoteFs("/home/jenkins")
 dockerTemplateCompose.connector.setUser("jenkins")
+dockerTemplatePip.setMode(Node.Mode.EXCLUSIVE)
+dockerTemplatePip.setRemoteFs("/home/jenkins")
+dockerTemplatePip.connector.setUser("jenkins")
 
 println "Configured docker cloud"
 
