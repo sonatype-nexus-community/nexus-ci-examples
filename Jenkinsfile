@@ -18,7 +18,7 @@ pipeline {
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        sh 'java -jar /usr/bin/nexus-iq-cli.jar -a admin:admin123 -i php-symfony -s env.IQ-server . --stage Build'
+        sh 'java -jar /usr/bin/nexus-iq-cli.jar -a admin:admin123 -i php-symfony -s ${IQserver} . --stage Build'
       }
     }
   }
