@@ -6,7 +6,7 @@ pipeline {
     stage('Pull Source') {
       // Get some code from a GitHub repository
       steps {
-        git 'https://github.com/nextcloud/android.git'
+        git ''https://github.com/adamjwsuch/android.git
       }
     }
     stage('Build & Install') {
