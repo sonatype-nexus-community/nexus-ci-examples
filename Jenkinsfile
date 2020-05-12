@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'struts2-rce', iqStage: 'build', jobCredentialsId: ''
+        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: "${env.JOB_BASE_NAME}", iqStage: 'build', jobCredentialsId: ''
       }
     }
   }
