@@ -13,7 +13,7 @@ import jenkins.model.Jenkins
 
 def dockerCloudParameters = [
   connectTimeout:   3,
-  containerCapStr:  '4',
+  containerCapStr:  '2',
   credentialsId:    '',
   dockerHostname:   '',
   name:             'Demo system auto added',
@@ -27,7 +27,7 @@ def dockerTemplateBaseParametersMaven = [
 ]
 
 def DockerTemplateParametersMaven = [
-  instanceCapStr: '4',
+  instanceCapStr: '1',
   labelString:    'maven-node',
   remoteFs:       ''
 ]
@@ -37,7 +37,7 @@ def dockerTemplateBaseParametersMaven11 = [
 ]
 
 def DockerTemplateParametersMaven11 = [
-  instanceCapStr: '4',
+  instanceCapStr: '1',
   labelString:    'maven-node-java-11',
   remoteFs:       ''
 ]
@@ -47,7 +47,7 @@ def dockerTemplateBaseParametersGradle = [
 ]
 
 def DockerTemplateParametersGradle = [
-  instanceCapStr: '4',
+  instanceCapStr: '1',
   labelString:    'gradle-node',
   remoteFs:       ''
 ]
@@ -57,7 +57,7 @@ def dockerTemplateBaseParametersNPM = [
 ]
 
 def DockerTemplateParametersNPM = [
-  instanceCapStr: '4',
+  instanceCapStr: '1',
   labelString:    'npm-node',
   remoteFs:       ''
 ]
@@ -67,7 +67,7 @@ def dockerTemplateBaseParametersCompose = [
 ]
 
 def DockerTemplateParametersCompose = [
-  instanceCapStr: '4',
+  instanceCapStr: '1',
   labelString:    'compose-node',
   remoteFs:       ''
 ]
@@ -77,7 +77,7 @@ def dockerTemplateBaseParametersPip = [
 ]
 
 def DockerTemplateParametersPip = [
-  instanceCapStr: '4',
+  instanceCapStr: '1',
   labelString:    'pip-node',
   remoteFs:       ''
 ]
@@ -87,7 +87,7 @@ def dockerTemplateBaseParametersJake = [
 ]
 
 def DockerTemplateParametersJake = [
-  instanceCapStr: '4',
+  instanceCapStr: '1',
   labelString:    'jake-node',
   remoteFs:       ''
 ]
@@ -97,7 +97,7 @@ def dockerTemplateBaseParametersCmake = [
 ]
 
 def DockerTemplateParametersCmake = [
-  instanceCapStr: '4',
+  instanceCapStr: '1',
   labelString:    'cmake-node',
   remoteFs:       ''
 ]
@@ -107,7 +107,7 @@ def dockerTemplateBaseParametersAuditjs = [
 ]
 
 def DockerTemplateParametersAuditjs = [
-  instanceCapStr: '4',
+  instanceCapStr: '1',
   labelString:    'auditjs-node',
   remoteFs:       ''
 ]
