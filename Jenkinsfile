@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'node-goat', iqStage: 'build', jobCredentialsId: '', iqScanPatterns: [[scanPattern: '**/*.*']]
+        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: '${env.JOB_NAME}', iqStage: 'build', jobCredentialsId: '', iqScanPatterns: [[scanPattern: '**/*.*']]
       }
     }
   }
