@@ -23,7 +23,7 @@ pipeline {
                 //sh 'python3 -m pip download -r requirements_all.txt --index-url=http://10.0.0.1:8081/repository/pypi-proxy/ --trusted-host 10.0.0.1'
 
                 sh 'cp requirements_all.txt requirements.txt'
-                nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'home-assistant', iqStage: 'build', jobCredentialsId: '', iqScanPatterns: [[scanPattern: '**/*.*']]
+                nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: "${env.JOB_BASE_NAME}", iqStage: 'build', jobCredentialsId: '', iqScanPatterns: [[scanPattern: '**/*.*']]
             }
         }
     }
