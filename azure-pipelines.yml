@@ -3,10 +3,19 @@
 trigger:
 - master
 
+resources:
+  repositories:
+  - repository: struts2-rce # https://github.com/CMYanko/struts2-rce
+    type: github
+    #You will need to change or match this endpoint configuration
+    endpoint: GitHubService
+    name: CMYanko/struts2-rce
+
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- checkout: struts2-rce
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
@@ -20,7 +29,7 @@ steps:
 - task: NexusIqPipelineTask@1
   inputs:
     #You will need to change or match this nexusIqService configuration
-    nexusIqService: 'NexusIQ'
+    nexusIqService: 'NexusIQService'
     applicationId: 'struts2-rce'
     stage: 'Build'
     scanTargets: '**/*'
