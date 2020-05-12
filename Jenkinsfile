@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        sh 'auditjs iq -a juice-shop-auditjs -d --server ${IQserver} -u admin -p admin123 -s build'
+        sh 'auditjs iq -a ${env.JOB_BASE_NAME} -d --server ${IQserver} -u admin -p admin123 -s build'
       }
     }
   }
