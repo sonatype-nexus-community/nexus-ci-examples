@@ -40,6 +40,6 @@ steps:
   inputs:
     #You will need to change or match this nexusIqService configuration
     nexusIqService: 'NexusIQService'
-    applicationId: 'struts2-rce'
+    applicationId: 'MvcWebApp'
     stage: 'Build'
     scanTargets: '**/*'
