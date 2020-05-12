@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: 'Nextcloud', iqStage: 'build', jobCredentialsId: '', iqScanPatterns: [[scanPattern: '**/*.*']]
+        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: "${env.JOB_BASE_NAME}", iqStage: 'build', jobCredentialsId: '', iqScanPatterns: [[scanPattern: '**/*.*']]
       }
     }
   }
