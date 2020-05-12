@@ -92,6 +92,26 @@ def DockerTemplateParametersJake = [
   remoteFs:       ''
 ]
 
+def dockerTemplateBaseParametersCmake = [
+  image:              'adamjwsuch/jenkins-node-cmake:latest'
+]
+
+def DockerTemplateParametersCmake = [
+  instanceCapStr: '4',
+  labelString:    'cmake-node',
+  remoteFs:       ''
+]
+
+def dockerTemplateBaseParametersAuditjs = [
+  image:              'adamjwsuch/jenkins-node-auditjs:latest'
+]
+
+def DockerTemplateParametersAuditjs = [
+  instanceCapStr: '4',
+  labelString:    'auditjs-node',
+  remoteFs:       ''
+]
+
 DockerTemplateBase dockerTemplateBaseMaven = new DockerTemplateBase(
   dockerTemplateBaseParametersMaven.image
 )
@@ -176,6 +196,30 @@ DockerTemplate dockerTemplateJake = new DockerTemplate(
   DockerTemplateParametersJake.instanceCapStr
 )
 
+DockerTemplateBase dockerTemplateBaseCmake = new DockerTemplateBase(
+  dockerTemplateBaseParametersCmake.image
+)
+
+DockerTemplate dockerTemplateCmake = new DockerTemplate(
+  dockerTemplateBaseCmake,
+  new DockerComputerAttachConnector(),
+  DockerTemplateParametersCmake.labelString,
+  DockerTemplateParametersCmake.remoteFs,
+  DockerTemplateParametersCmake.instanceCapStr
+)
+
+DockerTemplateBase dockerTemplateBaseAuditjs = new DockerTemplateBase(
+  dockerTemplateBaseParametersAuditjs.image
+)
+
+DockerTemplate dockerTemplateAuditjs = new DockerTemplate(
+  dockerTemplateBaseAuditjs,
+  new DockerComputerAttachConnector(),
+  DockerTemplateParametersAuditjs.labelString,
+  DockerTemplateParametersAuditjs.remoteFs,
+  DockerTemplateParametersAuditjs.instanceCapStr
+)
+
 DockerCloud dockerCloud = new DockerCloud(
   dockerCloudParameters.name,
   [
@@ -185,7 +229,9 @@ DockerCloud dockerCloud = new DockerCloud(
     dockerTemplateNPM,
     dockerTemplateCompose,
     dockerTemplatePip,
-    dockerTemplateJake
+    dockerTemplateJake,
+    dockerTemplateCmake,
+    dockerTemplateAuditjs
   ],
   dockerCloudParameters.serverUrl,
   dockerCloudParameters.containerCapStr,
@@ -222,6 +268,12 @@ dockerTemplatePip.connector.setUser("jenkins")
 dockerTemplateJake.setMode(Node.Mode.EXCLUSIVE)
 dockerTemplateJake.setRemoteFs("/home/jenkins")
 dockerTemplateJake.connector.setUser("jenkins")
+dockerTemplateCmake.setMode(Node.Mode.EXCLUSIVE)
+dockerTemplateCmake.setRemoteFs("/home/jenkins")
+dockerTemplateCmake.connector.setUser("jenkins")
+dockerTemplateAuditjs.setMode(Node.Mode.EXCLUSIVE)
+dockerTemplateAuditjs.setRemoteFs("/home/jenkins")
+dockerTemplateAuditjs.connector.setUser("jenkins")
 
 println "Configured docker cloud"
 
