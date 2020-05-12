@@ -22,7 +22,7 @@ pipeline {
 		//An example of how to use a local repo
                 //sh 'python3 -m pip download -r requirements_all.txt --index-url=http://10.0.0.1:8081/repository/pypi-proxy/ --trusted-host 10.0.0.1'
 
-		sh 'jake iq -a home-assistant -s develop -u admin -p admin123 -h ${IQserver}'
+		sh 'jake iq -a home-assistant-jake -s develop -u admin -p admin123 -h ${IQserver}'
             }
         }
     }
