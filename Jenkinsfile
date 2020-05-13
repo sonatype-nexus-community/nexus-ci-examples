@@ -6,7 +6,7 @@ pipeline {
     stage('Pull Source') {
       // Get some code from a GitHub repository
       steps {
-        git url: 'https://github.com/CMYanko/struts2-rce'
+        git url: 'https://github.com/sonatype-nexus-community/struts2-rce'
       }
     }
     stage('Build & Install') {
