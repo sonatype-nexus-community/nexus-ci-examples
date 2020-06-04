@@ -12,14 +12,12 @@ pipeline {
     stage('Build & Install') {
       steps {
         echo "Performing build"
-        sh 'npm -v'
-        sh 'npm install'
-        sh 'npm pack'
+        sh 'npm -v && npm install && npm pack'
       }
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        sh 'auditjs iq -a ${JOB_BASE_NAME} -d --server ${IQserver} -u admin -p admin123 -s build'
+        sh 'auditjs iq -a ${JOB_BASE_NAME} -d --server ${IQserver} -u ${IQusername} -p ${IQpassword} -s build'
       }
     }
   }
