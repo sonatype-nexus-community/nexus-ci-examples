@@ -12,12 +12,23 @@ pipeline {
     stage('Build & Install') {
       steps {
         echo "Performing build"
-        sh 'npm -v && npm install && npm pack'
+        sh 'npm -v && npm install'
       }
     }
-    stage('Nexus Lifecycle Evaluation') {
+    stage('AuditJS Scan Dev Scan') {
       steps {
-        sh 'auditjs iq -a ${JOB_BASE_NAME} -d --server ${IQserver} -u ${IQusername} -p ${IQpassword} -s build'
+        sh 'npx auditjs@latest iq -a ${JOB_BASE_NAME}-auditjs --server ${IQserver} -u ${IQusername} -p ${IQpassword} -s build --dev'
+      }
+    }
+    stage('AuditJS Scan') {
+      steps {
+        sh 'npx auditjs@latest iq -a ${JOB_BASE_NAME}-auditjs --server ${IQserver} -u ${IQusername} -p ${IQpassword} -s stage-release'
+      }
+    }
+    stage('AuditJS Scan ') {
+      steps {
+        sh 'wget https://download.sonatype.com/clm/scanner/latest.jar'
+        sh 'npx auditjs@latest sbom > auditjs-bom.xml'
       }
     }
   }

@@ -8,7 +8,6 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y git openssh-serve
 
 # Prepare container for ssh
 RUN mkdir /var/run/sshd && adduser --quiet jenkins && echo "jenkins:jenkins" | chpasswd
-RUN npm install -g auditjs
 
 ENV CI=true
 EXPOSE 22
