@@ -30,7 +30,7 @@ pipeline {
     stage('CLI Scan Full Directory') {
       steps {
         sh 'wget https://download.sonatype.com/clm/scanner/latest.jar' // should be in docker file
-        sh 'java -jar nexus-cli*.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ${JOB_BASE_NAME} -s build .'
+        sh 'java -jar latest.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ${JOB_BASE_NAME} -s build .'
       }
     }
     stage('Jenkins Plugin Scan Full Directory') {
@@ -40,7 +40,7 @@ pipeline {
     }
     stage('CLI Scan Full node_modules') {
       steps {
-        sh 'java -jar nexus-cli*.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ${JOB_BASE_NAME}-node_modules -s build node_modules'
+        sh 'java -jar latest.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ${JOB_BASE_NAME}-node_modules -s build node_modules'
       }
     }
     stage('Jenkins Plugin Scan node_modules') {
@@ -51,7 +51,7 @@ pipeline {
     stage('AuditJS SBOM - CLI Scan') {
       steps {
         sh 'npx auditjs@latest sbom > auditjs-bom.xml'
-        sh 'java -jar nexus-cli*.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ${JOB_BASE_NAME}-auditjs-bom -s build auditjs-bom.xml'
+        sh 'java -jar latest.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ${JOB_BASE_NAME}-auditjs-bom -s build auditjs-bom.xml'
       }
     }
     stage('AuditJS SBOM - Jenkins Plugin Scan') {
@@ -62,7 +62,7 @@ pipeline {
     stage('AuditJS Dev SBOM - CLI Scan') {
       steps {
         sh 'npx auditjs@latest sbom --dev > auditjs-dev-bom.xml'
-        sh 'java -jar nexus-cli*.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ${JOB_BASE_NAME}-auditjs-dev-bom -s build auditjs-dev-bom.xml'
+        sh 'java -jar latest.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ${JOB_BASE_NAME}-auditjs-dev-bom -s build auditjs-dev-bom.xml'
       }
     }
     stage('AuditJS Dev SBOM - Jenkins Plugin Scan') {
