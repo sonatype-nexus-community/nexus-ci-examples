@@ -36,10 +36,10 @@ pipeline {
             sh 'npx auditjs@latest iq -a ci-jshop-auditjs --server ${IQserver} -u ${IQusername} -p ${IQpassword} -s stage-release'
           }
         }
-        // ----------------------------- ci-jshop-full - build -----------------------------
+        // ----------------------------- ci-jshop-full - build - (remove dir excludes) -----------------------------
         stage('CLI Scan Full Directory') {
           steps {
-            sh 'java -jar nexus-iq-cli.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ci-jshop-full -t build .'
+            sh 'java -jar nexus-iq-cli.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ci-jshop-full -D dirExcludes="" -t build .'
           }
         }
         // ----------------------------- ci-jshop-full - stage-release -----------------------------
@@ -48,10 +48,10 @@ pipeline {
             nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: "ci-jshop-full", iqStage: 'stage-release', jobCredentialsId: '', iqScanPatterns: [[scanPattern: '**/*']]
           }
         }
-        // ----------------------------- ci-jshop-node_modules - build -----------------------------
+        // ----------------------------- ci-jshop-node_modules - build - (remove dir excludes) -----------------------------
         stage('CLI Scan Full node_modules') {
           steps {
-            sh 'java -jar nexus-iq-cli.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ci-jshop-node_modules -t build node_modules'
+            sh 'java -jar nexus-iq-cli.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ci-jshop-node_modules -D dirExcludes="" -t build node_modules'
           }
         }
         // ----------------------------- ci-jshop-node_modules - stage-release -----------------------------
