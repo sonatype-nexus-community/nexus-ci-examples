@@ -74,10 +74,26 @@ pipeline {
             sh 'npx auditjs@latest sbom --dev > auditjs-dev-bom.xml'
           }
         }
+        stage('CycloneDX SBOM') {
+          steps {
+            sh 'npx @cyclonedx/bom -o cyclonedx-bom.xml'
+          }
+        }
       }
     }
     stage('Scan SBOMs') {
       parallel {
+        stage('CycloneDX SBOM - CLI Scan') {
+          steps {
+            sh 'java -jar nexus-iq-cli.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ci-jshop-cyclonedx-bom -t build cyclonedx-bom.xml'
+          }
+        }
+        // ----------------------------- ci-jshop-auditjs-dev-bom - stage-release -----------------------------
+        stage('CycloneDX SBOM - Jenkins Plugin Scan') {
+          steps {
+            nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: "ci-jshop-cyclonedx-bom", iqStage: 'stage-release', jobCredentialsId: '', iqScanPatterns: [[scanPattern: 'cyclonedx-bom.xml']]
+          }
+        }
         // ----------------------------- ci-jshop-auditjs-bom - build -----------------------------
         stage('AuditJS SBOM - CLI Scan') {
           steps {
