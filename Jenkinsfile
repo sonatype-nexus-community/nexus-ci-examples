@@ -39,7 +39,7 @@ pipeline {
         // ----------------------------- ci-jshop-full - build - (remove dir excludes) -----------------------------
         stage('CLI Scan Full Directory') {
           steps {
-            sh 'java -jar nexus-iq-cli.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ci-jshop-full -D dirExcludes="" -D fileSizes=“true" -t build .'
+            sh 'java -jar nexus-iq-cli.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ci-jshop-full -D dirExcludes="" -D fileSizes="true" -t build .'
           }
         }
         // ----------------------------- ci-jshop-full - stage-release -----------------------------
@@ -51,7 +51,7 @@ pipeline {
         // ----------------------------- ci-jshop-node_modules - build - (remove dir excludes) -----------------------------
         stage('CLI Scan Full node_modules') {
           steps {
-            sh 'java -jar nexus-iq-cli.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ci-jshop-node_modules -D dirExcludes="" -D fileSizes=“true" -t build node_modules'
+            sh 'java -jar nexus-iq-cli.jar -s ${IQserver} -a ${IQusername}:${IQpassword} -i ci-jshop-node_modules -D dirExcludes="" -D fileSizes="true" -t build node_modules'
           }
         }
         // ----------------------------- ci-jshop-node_modules - stage-release -----------------------------
