@@ -18,7 +18,7 @@ pipeline {
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        sh 'java -jar /usr/bin/nexus-iq-cli.jar -a admin:admin123 -i ${JOB_BASE_NAME} -s ${IQserver} . --stage Build'
+        sh 'java -jar /usr/bin/nexus-iq-cli.jar -a ${IQusername}:${IQpassword} -i ${JOB_BASE_NAME} -s ${IQserver} . --stage Build'
       }
     }
   }
