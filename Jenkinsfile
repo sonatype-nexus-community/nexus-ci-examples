@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        sh 'auditjs iq -a ${JOB_BASE_NAME} -d --server ${IQserver} -u admin -p admin -s build'
+        sh 'auditjs iq -a ${JOB_BASE_NAME} -d --server ${IQserver} -u ${IQusername} -p ${IQpassword} -s build'
       }
     }
   }
