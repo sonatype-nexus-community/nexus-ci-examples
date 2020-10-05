@@ -19,7 +19,7 @@ Each of the examples are split into separate Git branches, so they can easily au
 
 To make the builds repeatable and simple, this project include Jenkins Docker build nodes provided as Docker containers with a preconfigured build environment for each ecosystem; for example for Maven build example, the container preconfigures Maven and Java. The Dockerfile and supporting content are provided with each build example branch.
 
-# Usage insructions for Jenkins
+# Usage instructions for Jenkins
 Jenkins setup
 
 You will need the "Docker" and “Nexus Platform” plugins 
