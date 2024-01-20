@@ -11,3 +11,7 @@ Usage of simple Combine Networking with SwiftUI to display the weather list.
 
 <h1>Appending New Weather Data </h1>
 <img src= "https://github.com/sabapathyk7/WeatherApp/assets/40764138/1cc1b5b8-d695-4ead-99f5-a45797c100d0" height = 550> 
+
+## Connect with Me
+
+Stay updated on the latest features and releases by following me on [LinkedIn](https://www.linkedin.com/in/sabapathy7/).
