@@ -15,7 +15,7 @@ pipeline {
     }
     stage('Nexus Lifecycle Evaluation') {
       steps {
-        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: "${env.JOB_BASE_NAME}", iqStage: 'build', jobCredentialsId: '', iqScanPatterns: [[scanPattern: 'Podilfe.lock']]
+        nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: "${env.JOB_BASE_NAME}", iqStage: 'build', jobCredentialsId: '', iqScanPatterns: [[scanPattern: 'Podfile.lock']]
       }
     }
   }
