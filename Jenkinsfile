@@ -5,7 +5,7 @@ pipeline {
     stage('Pull Source') {
       // Get some code from a GitHub repository
       steps {
-        git branch: 'dev', url: 'https://github.com/ctownshend/iosWeatherApp'
+        git branch: 'main', url: 'https://github.com/ctownshend/iosWeatherApp'
       }
     }
     stage('Build & Install') {
