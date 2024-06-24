@@ -1,37 +1,16 @@
 PODS:
-  - ADMobGenAdapter (1.5.2):
-    - ADMobGenFoundation
-  - ADMobGenFoundation (0.7.2)
-  - ADMobGenGDT (4.10.0):
-    - ADMobGenAdapter
-    - ADMobGenFoundation
-    - GDTMobSDK (= 4.10.2)
-  - GDTMobSDK (4.10.2):
-    - GDTMobSDK/GDTMobSDK (= 4.10.2)
-  - GDTMobSDK/GDTMobSDK (4.10.2)
-  - YogaKit (1.2.0)
-  - libpng (1.4.9)
-  - libpng (1.0.8)
-  - GethDevelop (1.8.17)
+  - SSZipArchive (2.5.3)
 
 DEPENDENCIES:
-  - ADMobGenGDT (from `../`)
+  - SSZipArchive (= 2.5.3)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - ADMobGenAdapter
-    - ADMobGenFoundation
-    - GDTMobSDK
-
-EXTERNAL SOURCES:
-  ADMobGenGDT:
-    :path: "../"
+  trunk:
+    - SSZipArchive
 
 SPEC CHECKSUMS:
-  ADMobGenAdapter: 5ab3531d5659c96812e6da545c1ec160b9991a2e
-  ADMobGenFoundation: de6e4f7b09df256a347878d0f0e0438c1feac94e
-  ADMobGenGDT: 77d18f682136e9e90fc9e5dfb0fc57637d5441d7
-  GDTMobSDK: 6fde44a4f80c36051d5d879df8bb280034c31431
+  SSZipArchive: d3ea9f5e15234229a8d7e164c2789a82b7c19440
 
-PODFILE CHECKSUM: 441850ec31e67c6ea8241a64c55657d490e51d66
+PODFILE CHECKSUM: 341cd5c332543ab90b659f5cbeff90b6a995ddf8
+
 COCOAPODS: 1.15.2
