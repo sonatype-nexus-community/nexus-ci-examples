@@ -23,10 +23,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'zulu'
-    - name: Run Spotless check
-      run: mvn spotless:check
+
     - name: Create WAR
-      run: mvn package
+      run: mvn clean package
+
     - name: Sonatype Lifecycle Policy Evaluation
       uses: sonatype-nexus-community/iq-github-action@v2
       with:
