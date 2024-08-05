@@ -8,9 +8,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./BenchmarkJava
 
     steps:
-
     - name: Checkout Benchmark java
       uses: actions/checkout@master
       with:
