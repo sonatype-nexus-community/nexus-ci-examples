@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./BenchmarkJava
+        working-directory: BenchmarkJava
 
     steps:
     - name: Checkout Benchmark java
