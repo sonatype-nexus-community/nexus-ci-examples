@@ -2,7 +2,8 @@ name: Java CI with Maven
 
 on: [push, pull_request]
 env:
-  SONATYPE_LIFECYCLE_APPLICATION_ID: $(echo "${{ github.repository }}" | cut -d '/' -f2)
+  SONATYPE_LIFECYCLE_APPLICATION_ID : ${{ github.head_ref || github.ref_name }} 
+  # SONATYPE_LIFECYCLE_APPLICATION_ID: $(echo "${{ github.repository }}" | cut -d '/' -f2)
 
 jobs:
   build:
