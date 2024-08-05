@@ -8,16 +8,13 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: BenchmarkJava
 
     steps:
     - name: Checkout Benchmark java
       uses: actions/checkout@master
       with:
         repository: OWASP-Benchmark/BenchmarkJava
-        path: master
+        
          
 
     - name: Set up JDK 11
