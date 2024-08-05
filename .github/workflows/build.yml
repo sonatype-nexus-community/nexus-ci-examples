@@ -1,0 +1,42 @@
+name: CI Build and scan
+on: [push, pull_request]
+env:
+  SONATYPE_LIFECYCLE_APPLICATION_ID : ${{ github.head_ref || github.ref_name }} 
+  # SONATYPE_LIFECYCLE_APPLICATION_ID: $(echo "${{ github.repository }}" | cut -d '/' -f2)
+
+jobs:
+  build:
+    name: Node.js
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["14.x"]
+
+    steps:
+      - name: Checkout Nodegoat
+        uses: actions/checkout@master
+        with:
+         repository: OWASP/NodeGoat
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Check version
+        run: npm -v
+      - name: Run Build
+        run: npm install
+      - name: Run Build
+        run: npm pack
+      - name: Sonatype Lifecycle Policy Evaluation
+        uses: sonatype-nexus-community/iq-github-action@v2
+        with:
+          serverUrl: ${{ secrets.SONATYPE_LIFECYCLE_URL }}
+          username: ${{ secrets.SONATYPE_LIFECYCLE_USERNAME }}
+          password: ${{ secrets.SONATYPE_LIFECYCLE_PASSWORD }}
+          applicationId: ${{ env.SONATYPE_LIFECYCLE_APPLICATION_ID }}
+          stage: Build
+          target: ./
+ 
