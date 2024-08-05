@@ -16,31 +16,54 @@ jobs:
 
     steps:
       - name: Checkout Nodegoat
-       uses: actions/checkout@master
-       with:
+        uses: actions/checkout@master
+        with:
          repository: OWASP/NodeGoat
-
 
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-   
-      - name: Run Build
+      - name: Check version
         run: npm -v
       - name: Run Build
         run: npm install
       - name: Run Build
         run: npm pack
-  
-  
       - name: Sonatype Lifecycle Policy Evaluation
         uses: sonatype-nexus-community/iq-github-action@v2
         with:
-              serverUrl: ${{ secrets.SONATYPE_LIFECYCLE_URL }}
-              username: ${{ secrets.SONATYPE_LIFECYCLE_USERNAME }}
-              password: ${{ secrets.SONATYPE_LIFECYCLE_PASSWORD }}
-              applicationId: ${{ env.SONATYPE_LIFECYCLE_APPLICATION_ID }}
-              stage: Build
-              target: ./
+          serverUrl: ${{ secrets.SONATYPE_LIFECYCLE_URL }}
+          username: ${{ secrets.SONATYPE_LIFECYCLE_USERNAME }}
+          password: ${{ secrets.SONATYPE_LIFECYCLE_PASSWORD }}
+          applicationId: ${{ env.SONATYPE_LIFECYCLE_APPLICATION_ID }}
+          stage: Build
+          target: ./
  
+
+name: Lint
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Node.js
+    runs-on: ubuntu-latest
+
+    strategy:
+    	fail-fast: false
+      matrix:
+        node-version: ["14.x"]
+
+    steps:
+      - name: Checkout https://github.com/${{ github.repository }}@${{ github.ref }}
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Run linter
+        run: npx --no-install jshint@2.12.0 .
