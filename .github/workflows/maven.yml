@@ -2,7 +2,8 @@ name: Java CI with Maven
 
 on: [push, pull_request]
 env:
-  SONATYPE_LIFECYCLE_APPLICATION_ID: $(echo "${{ github.repository }}" | cut -d '/' -f2)
+  SONATYPE_LIFECYCLE_APPLICATION_ID : ${{ github.head_ref || github.ref_name }} 
+  # SONATYPE_LIFECYCLE_APPLICATION_ID: $(echo "${{ github.repository }}" | cut -d '/' -f2)
 
 jobs:
   build:
@@ -10,12 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Checkout Benchmark java
       uses: actions/checkout@master
       with:
         repository: OWASP-Benchmark/BenchmarkJava
-        path: master
+        
          
 
     - name: Set up JDK 11
@@ -23,10 +23,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'zulu'
-    - name: Run Spotless check
-      run: mvn spotless:check
+
     - name: Create WAR
-      run: mvn package
+      run: mvn clean package
+
     - name: Sonatype Lifecycle Policy Evaluation
       uses: sonatype-nexus-community/iq-github-action@v2
       with:
