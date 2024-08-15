@@ -1,117 +1,162 @@
-# Sonatype Lifecycle CI Examples
-CI example builds and Sonatype Lifecycle analysis for different languages.
+# NodeGoat
 
-Each of the examples are split into separate Git branches, so they can easily automatically be pulled into a CI multibranch build job, as explained below for Jenkins CI.
+Being lightweight, fast, and scalable, Node.js is becoming a widely adopted platform for developing web applications. This project provides an environment to learn how OWASP Top 10 security risks apply to web applications developed using Node.js and how to effectively address them.
 
-|Language  |Build System         |Lifecycle Integration             |Git Branch|
-|----------|---------------------|----------------------------------|:-----|
-|C++       |cmake                |[Sonatype CLI][CLI]               |[c++-cmake-opencv](../../tree/c++-cmake-opencv)|
-|Java      |Gradle/Android Studio|[Sonatype CLI][CLI]               |[java-android-gradle-LeafPic](../../tree/java-android-gradle-LeafPic)|
-|Java      |Gradle/Android Studio|[Sonatype CLI][CLI]               |[java-android-gradle-nextcloud](../../tree/java-android-gradle-nextcloud)|
-|Java      |Maven                |[Sonatype Jenkins Plugin][Jenkins]|[java-maven-struts2-rce](../../tree/java-maven-struts2-rce)|
-|Java      |Maven                |[Sonatype Jenkins Plugin][Jenkins]|[java-maven-webgoat](../../tree/java-maven-webgoat)|
-|Javascript|NPM                  |AuditJS                           |[javascript-auditjs-juiceshop](../../tree/javascript-auditjs-juiceshop)|
-|Javascript|NPM                  |[Sonatype Jenkins Plugin][Jenkins]|[javascript-npm-juiceshop](../../tree/javascript-npm-juiceshop)|
-|Javascript|NPM                  |[Sonatype Jenkins Plugin][Jenkins]|[javascript-npm-nodegoat](../../tree/javascript-npm-nodegoat)|
-|PHP       |Composer             |[Sonatype CLI][CLI]               |[php-composer-symfony](../../tree/php-composer-symfony)|
-|Python    |PIP                  |Jake                              |[python-jake-homeassistant](../../tree/python-jake-homeassistant)|
-|Python    |PIP                  |[Sonatype Jenkins Plugin][Jenkins]|[python-pip-homeassistant](../../tree/python-pip-homeassistant)|
-|Rust      |Rust                 |[Sonatype Jenkins Plugin][Jenkins]|[rust-rust-story](../../tree/rust-rust-story)|
+## Getting Started
 
-To make the builds repeatable and simple, this project include Jenkins Docker build nodes provided as Docker containers with a preconfigured build environment for each ecosystem; for example for Maven build example, the container [preconfigures Maven and Java](https://github.com/sonatype-nexus-community/nexus-ci-examples/blob/java-maven-struts2-rce/jenkins-node-maven/Dockerfile). The Dockerfile and supporting content are provided with each build example branch.
+OWASP Top 10 for Node.js web applications:
 
-## Usage instructions for Jenkins
-### Jenkins setup
+### Know it!
 
-You will need the Jenkins "Docker" and “Nexus Platform” plugins 
+This application bundled a tutorial page that explains the OWASP Top 10 vulnerabilities and how to fix them.
 
-Jenkins -> Manage Jenkins -> Manage Plugins -> Available
-            Type: “Nexus Platform” in the search box
-            Select the Nexus Platform plugin, then “Install without restart”
+Once the application is running, you can access the tutorial page at [http://localhost:4000/tutorial](http://localhost:4000/tutorial) (or the port you have configured).
 
-### Configure the Nexus Plugin
-Jenkins -> Manage Jenkins -> Configure System
+### Do it!
 
-Scroll down to the Sonatype Nexus section
+[A Vulnerable Node.js App for Ninjas](http://nodegoat.herokuapp.com/) to exploit, toast, and fix. You may like to [set up your own copy](#how-to-set-up-your-copy-of-nodegoat) of the app to fix and test vulnerabilities. Hint: Look for comments in the source code.
 
-“Add IQ Server”
+##### Default user accounts
 
-and add the IQ server configuration and cridentials, you can check the connection on this page.
+The database comes pre-populated with these user accounts created as part of the seed data -
+* Admin Account - u:`admin` p:`Admin_123`
+* User Accounts (u:`user1` p:`User1_123`), (u:`user2` p:`User2_123`)
+* New users can also be added using the sign-up page.
 
-### Install the Docker Plugin
-Jenkins -> Manage Jenkins -> Manage Plugins -> Available
-            Type: “Docker” in the search box
-            Select the “Docker” plugin (not the Docker API plugin)
+## How to Set Up Your Copy of NodeGoat
 
-Select “Download now and install after restart”
-             Select the “Restart after download when no jobs are running”
+### OPTION 1 - Run NodeGoat on your machine
 
-### Configure the Docker Cloud
-The groovy scipt on the project can automate the setup of the Docker plugin.
-                        Click on the set-up-cloud.groovy file
-                        Click the “raw” button near the top
-                        Copy the entire file
+1) Install [Node.js](http://nodejs.org/) - NodeGoat requires Node v8 or above
 
-Login to Jenkins:
-                        Jenkins -> Manage Jenkins -> Script Console (it’s under Tools and Actions)
+2) Clone the github repository:
+   ```
+   git clone https://github.com/OWASP/NodeGoat.git
+   ```
 
-Paste the text/copy buffer into the window
+3) Go to the directory:
+   ```
+   cd NodeGoat
+   ```
 
-Search for 'IQserver' and change the IQ URL to match you system configuration (bear in mind that this is from within a docker build node, not from the Jenkins machine itself)
-For example if you use Docker Desktop and your IQ server is running on the same host as docker you would use: http://host.docker.internal:8070
-You will also need to configure the location the system can use to reach your docker host. For a local Jenkins and Docker install the unix socket in the default config will work, for other systems, such as Jenkins within docker you will need to mount the socket as a volume or expose the API to http.
+4) Install node packages:
+   ```
+   npm install
+   ```
 
+5) Set up MongoDB. You can either install MongoDB locally or create a remote instance:
 
-### Jenkins Job Configuration
-Before configuring this, you need to create a GitHub token for Jenkins to access the GitHub repository with.  Failure to do this will result in errors caused by hitting the GitHub API limits.
+   * Using local MongoDB:
+     1) Install [MongoDB Community Server](https://docs.mongodb.com/manual/administration/install-community/)
+     2) Start [mongod](http://docs.mongodb.org/manual/reference/program/mongod/#bin.mongod)
 
-### Create a GitHub “Token”
-Open http://www.github.com  and “Signin”.    You may need to provide your 2FA token using Google Authenticator.
+   * Using remote MongoDB instance:
+     1) [Deploy a MongoDB Atlas free tier cluster](https://docs.atlas.mongodb.com/tutorial/deploy-free-tier-cluster/) (M0 Sandbox)
+     2) [Enable network access](https://docs.atlas.mongodb.com/security/add-ip-address-to-list/) to the cluster from your current IP address
+     3) [Add a database user](https://docs.atlas.mongodb.com/tutorial/create-mongodb-user-for-cluster/) to the cluster
+     4) Set the `MONGODB_URI` environment variable to the connection string of your cluster, which can be viewed in the cluster's
+        [connect dialog](https://docs.atlas.mongodb.com/tutorial/connect-to-your-cluster/#connect-to-your-atlas-cluster). Select "Connect your application",
+        set the driver to "Node.js" and the version to "2.2.12 or later". This will give a connection string in the form:
+        ```
+        mongodb://<username>:<password>@<cluster>/<dbname>?ssl=true&replicaSet=<rsname>&authSource=admin&retryWrites=true&w=majority
+        ```
+        The `<username>` and `<password>` fields need filling in with the details of the database user added earlier. The `<dbname>` field sets the name of the
+        database nodegoat will use in the cluster (eg "nodegoat"). The other fields will already be filled in with the correct details for your cluster.
 
-Click on your user icon in the upper right corner -> Settings
+6) Populate MongoDB with the seed data required for the app:
+   ```
+   npm run db:seed
+   ```
+   By default this will use the "development" configuration, but the desired config can be passed as an argument if required.
 
-At the bottom left -> Developer settings -> Personal access tokens
+7) Start the server. You can run the server using node or nodemon:
+   * Start the server with node. This starts the NodeGoat application at [http://localhost:4000/](http://localhost:4000/):
+     ```
+     npm start
+     ```
+   * Start the server with nodemon, which will automatically restart the application when you make any changes. This starts the NodeGoat application at [http://localhost:5000/](http://localhost:5000/):
+     ```
+     npm run dev
+     ```
 
-[Generate new token]
+#### Customizing the Default Application Configuration
 
+By default the application will be hosted on port 4000 and will connect to a MongoDB instance at localhost:27017. To change this set the environment variables `PORT` and `MONGODB_URI`.
 
-### Create the Jenkins job
+Other settings can be changed by updating the [config file](https://github.com/OWASP/NodeGoat/blob/master/config/env/all.js).
 
-Jenkins -> Create a job
+### OPTION 2 - Run NodeGoat on Docker
 
-              Enter an item name:  Nexus Example Builds
+The repo includes the Dockerfile and docker-compose.yml necessary to set up the app and db instance, then connect them together.
 
-              Scroll to the bottom and select: Multibranch Pipeline.  -> OK
+1) Install [docker](https://docs.docker.com/installation/) and [docker compose](https://docs.docker.com/compose/install/) 
 
+2) Clone the github repository:
+   ```
+   git clone https://github.com/OWASP/NodeGoat.git
+   ```
 
+3) Go to the directory:
+   ```
+   cd NodeGoat
+   ```
 
-              Display Name:  Nexus Example Builds
+4) Build the images:
+   ```
+   docker-compose build
+   ```
 
-              Branch Sources -> Add source -> GitHub
+5) Run the app, this starts the NodeGoat application at http://localhost:4000/:
+   ```
+   docker-compose up
+   ```
 
-                        Credentials:  Add -> Jenkins
+### OPTION 3 - Deploy to Heroku
 
-                                    Username:      <username>@sonatype.com
+This option uses a free ($0/month) Heroku node server.
 
-                                    Password:       Paste your token password
+Though not essential, it is recommended that you fork this repository and deploy the forked repo.
+This will allow you to fix vulnerabilities in your own forked version, then deploy and test it on Heroku.
 
-                                    ID:                   NexusExampleBuilds-GitHub
+1) Set up a publicly accessible MongoDB instance:
+   1) [Deploy a MongoDB Atlas free tier cluster](https://docs.atlas.mongodb.com/tutorial/deploy-free-tier-cluster/) (M0 Sandbox)
+   2) [Enable network access](https://docs.atlas.mongodb.com/security/ip-access-list/#add-ip-access-list-entries) to the cluster from anywhere (CIDR range 0.0.0.0/0)
+   3) [Add a database user](https://docs.atlas.mongodb.com/tutorial/create-mongodb-user-for-cluster/) to the cluster
 
-                                    Description:   NexusExampleBuilds-GitHub
+2) Deploy NodeGoat to Heroku by clicking the button below:
 
-                                    [Add]
+   [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-                        Credentials:  Select NexusExampleBuilds-GitHub
+   In the Create New App dialog, set the `MONGODB_URI` config var to the connection string of your MongoDB Atlas cluster.
+   This can be viewed in the cluster's [connect dialog](https://docs.atlas.mongodb.com/tutorial/connect-to-your-cluster/#connect-to-your-atlas-cluster).
+   Select "Connect your application", set the driver to "Node.js" and the version to "2.2.12 or later".
+   This will give a connection string in the form:
+   ```
+   mongodb://<username>:<password>@<cluster>/<dbname>?ssl=true&replicaSet=<rsname>&authSource=admin&retryWrites=true&w=majority
+   ```
+   The `<username>` and `<password>` fields need filling in with the details of the database user added earlier. The `<dbname>` field sets the name of the
+   database nodegoat will use in the cluster (eg "nodegoat"). The other fields will already be filled in with the correct details for your cluster.
 
-                        Repository HTTPS URL:  https://github.com/sonatype-nexus-community/nexus-ci-examples.git
+## Report bugs, Feedback, Comments
 
-                                    [Validate]
+*  Open a new [issue](https://github.com/OWASP/NodeGoat/issues) or contact team by joining chat at [Slack](https://owasp.slack.com/messages/project-nodegoat/) or [![Join the chat at https://gitter.im/OWASP/NodeGoat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/OWASP/NodeGoat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-                        Scroll to the bottom and select “Save”
+## Contributing
 
+Please Follow [the contributing guide](CONTRIBUTING.md)
 
+## Code Of Conduct (CoC)
 
-At this point – Builds for all the platforms/eco-systems will automatically kick off.
+This project is bound by a [Code of Conduct](CODE_OF_CONDUCT.md).
 
-[CLI]: https://help.sonatype.com/en/sonatype-iq-cli.html
-[Jenkins]: https://help.sonatype.com/en/sonatype-platform-plugin-for-jenkins.html
+## Contributors
+
+Here are the amazing [contributors](https://github.com/OWASP/NodeGoat/graphs/contributors) to the NodeGoat project.
+
+## Supports
+
+- Thanks to JetBrains for providing licenses to fantastic [WebStorm IDE](https://www.jetbrains.com/webstorm/) to build this project.
+
+## License
+
+Code licensed under the [Apache License v2.0.](http://www.apache.org/licenses/LICENSE-2.0)
