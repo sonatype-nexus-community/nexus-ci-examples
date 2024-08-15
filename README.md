@@ -5,7 +5,7 @@ Each of the examples are split into separate Git branches, so they can easily au
 
 |Language  |Build System         |Lifecycle Integration             |Git Branch|
 |----------|---------------------|----------------------------------|:-----|
-|C++       |cmake                |[Sonatype CLI][CLI]               |[c++-cmake-opencv](../../tree/c++-cmake-opencv)|
+|C++       |cmake                |[Sonatype CLI][CLI]               |[c++-cmake-opencv](../../tree/cpp-cmake-opencv)|
 |Java      |Gradle/Android Studio|[Sonatype CLI][CLI]               |[java-android-gradle-LeafPic](../../tree/java-android-gradle-LeafPic)|
 |Java      |Gradle/Android Studio|[Sonatype CLI][CLI]               |[java-android-gradle-nextcloud](../../tree/java-android-gradle-nextcloud)|
 |Java      |Maven                |[Sonatype Jenkins Plugin][Jenkins]|[java-maven-struts2-rce](../../tree/java-maven-struts2-rce)|
@@ -17,6 +17,12 @@ Each of the examples are split into separate Git branches, so they can easily au
 |Python    |PIP                  |Jake                              |[python-jake-homeassistant](../../tree/python-jake-homeassistant)|
 |Python    |PIP                  |[Sonatype Jenkins Plugin][Jenkins]|[python-pip-homeassistant](../../tree/python-pip-homeassistant)|
 |Rust      |Rust                 |[Sonatype Jenkins Plugin][Jenkins]|[rust-rust-story](../../tree/rust-rust-story)|
+|Node      |Node                 |[Sonatype Jenkins Plugin][Jenkins]|[JuiceShopGHA](../../tree/JuiceShopGHA)|
+|Node      |Node                 |[Sonatype Jenkins Plugin][Jenkins]|[NodeGoatGHA](../../tree/NodeGoatGHA)|
+|Rust      |Rust                 |[Sonatype Jenkins Plugin][Jenkins]|[vuln-rust-project](../../tree/vuln-rust-project)|
+
+
+
 
 To make the builds repeatable and simple, this project include Jenkins Docker build nodes provided as Docker containers with a preconfigured build environment for each ecosystem; for example for Maven build example, the container [preconfigures Maven and Java](https://github.com/sonatype-nexus-community/nexus-ci-examples/blob/java-maven-struts2-rce/jenkins-node-maven/Dockerfile). The Dockerfile and supporting content are provided with each build example branch.
 
