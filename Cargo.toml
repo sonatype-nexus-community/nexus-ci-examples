@@ -1,0 +1,19 @@
+[package]
+name = "soos-sample-project"
+authors = ["SOOS <integrations@soos.io>"]
+version = "1.0.1"
+edition = "2021"
+license = "MIT"
+license-file = "LICENSE"
+description = "SOOS ( https://soos.io ) is an independent software security company, located in Winooski, VT USA, building security software for your team. Used for testing purposes, this package is an example of a vulnerable package on a public registry."
+homepage = "https://soos.io/"
+repository = "https://github.com/soos-io/sample-project-rust"
+readme = "README.md"
+keywords = ["sample", "testing"]
+
+[dependencies]
+aac = "0.0.0"
+acc_reader = "2.0.0"
+pbkdf2 = { version = "0.13.0-pre.1" }
+core-nightly = "2015.1.7"
+protobuf = "2.5.0"
