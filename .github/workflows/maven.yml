@@ -1,14 +1,25 @@
 name: Java CI with Maven
 
-on: [push, pull_request]
+on: 
+  push:
+    branches:
+      - 'BenchmarkJava'
+      - '!main'
+      - '!master'
+
 env:
-  SONATYPE_LIFECYCLE_APPLICATION_ID : ${{ github.head_ref || github.ref_name }} 
+  SONATYPE_LIFECYCLE_APPLICATION_ID : ${{ github.head_ref || github.ref_name }}-Team3
   # SONATYPE_LIFECYCLE_APPLICATION_ID: $(echo "${{ github.repository }}" | cut -d '/' -f2)
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    outputs:
+      output-scan-id: ${{ steps.iq-scan.outputs.scan-id }}
+      output-report-url: ${{ steps.iq-scan.outputs.report-url }}
+
+
 
     steps:
     - name: Checkout Benchmark java
@@ -28,12 +39,39 @@ jobs:
       run: mvn clean package
 
     - name: Sonatype Lifecycle Policy Evaluation
-      uses: sonatype-nexus-community/iq-github-action@v2
+      id: iq-scan
+      uses: sonatype/actions/evaluate@v1
       with:
-        serverUrl: ${{ secrets.SONATYPE_LIFECYCLE_URL }}
+        iq-server-url: ${{ vars.SONATYPE_IQ_SERVER }}
+        # organization-id: Team1
         username: ${{ secrets.SONATYPE_LIFECYCLE_USERNAME }}
         password: ${{ secrets.SONATYPE_LIFECYCLE_PASSWORD }}
-        applicationId: ${{ env.SONATYPE_LIFECYCLE_APPLICATION_ID }}
+        application-id: ${{ env.SONATYPE_LIFECYCLE_APPLICATION_ID }}
         stage: Build
-        target: ./target/
+        scan-targets: ./target/
+        module-exclude: benchmark.war
+        result-file: result-file.json
+        debug: false
+        keep-scan-file: true
   
+    - name: Archive report
+      uses: actions/upload-artifact@v4
+      with:
+        name: IQ-report
+        path: |
+          result-file.json
+          outputs
+      
+  job2:
+      runs-on: ubuntu-latest
+      needs: [build]
+      steps:
+        # Will show
+        # {
+        #   "output_1": "1",
+        #   "output_2": "2",
+        #   "output_3": "3"
+        # }
+        - run: echo '${{ toJSON(needs.build.outputs) }}'
+        - run: ls -als
+        
