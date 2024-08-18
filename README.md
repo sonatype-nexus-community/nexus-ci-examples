@@ -127,3 +127,4 @@ At this point – Builds for all the platforms/eco-systems will automatically ki
 
 [CLI]: https://help.sonatype.com/en/sonatype-iq-cli.html
 [Jenkins]: https://help.sonatype.com/en/sonatype-platform-plugin-for-jenkins.html
+[Actions]: https://help.sonatype.com/en/sonatype-github-actions.html
