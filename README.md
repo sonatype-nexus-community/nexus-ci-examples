@@ -7,7 +7,7 @@ Each of the examples are split into separate Git branches, so they can easily au
 |----------|---------------------|----------------------------------|:-----|
 |C++       |cmake                |[Sonatype CLI][CLI]               |[c++-cmake-opencv](../../tree/cpp-cmake-opencv)|
 |ios      |ios                 |[Sonatype Jenkins Plugin][Jenkins]|[ios-weather-app](../../tree/ios-weather-app)|
-|Java      |Java                 |[Github Action][Action]|[BenchmarkJava](../../tree/BenchmarkJava)|
+|Java      |Java                 |[Github Action][Actions]|[BenchmarkJava](../../tree/BenchmarkJava)|
 |Java      |Gradle/Android Studio|[Sonatype CLI][CLI]               |[java-android-gradle-LeafPic](../../tree/java-android-gradle-LeafPic)|
 |Java      |Gradle/Android Studio|[Sonatype CLI][CLI]               |[java-android-gradle-nextcloud](../../tree/java-android-gradle-nextcloud)|
 |Java      |Maven                |[Sonatype Jenkins Plugin][Jenkins]|[java-maven-struts2-rce](../../tree/java-maven-struts2-rce)|
